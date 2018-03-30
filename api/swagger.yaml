@@ -1,0 +1,59 @@
+---
+swagger: "2.0"
+info:
+  description: "Backup solution for binaries"
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "niko@lbry.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "caveau.lbry.io"
+basePath: "/"
+tags:
+- name: "storage"
+  description: "Everything goes here"
+schemes:
+- "https"
+paths:
+  /wallet:
+    post:
+      tags:
+      - "storage"
+      summary: "store a new wallet in the caveau"
+      description: "a wallet passed to this endpoint will be stored in the caveau"
+      operationId: "storeWallet"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "category"
+        in: "formData"
+        description: "the category in which the backup must be stored"
+        required: false
+        type: "string"
+        x-exportParamName: "Category"
+      - name: "wallet"
+        in: "formData"
+        description: "the wallet to backup"
+        required: false
+        type: "file"
+        x-exportParamName: "Wallet"
+      responses:
+        200:
+          description: "wallet stored successfully"
+        400:
+          description: "bad request"
+        401:
+          description: "not unauthorized to store a backup"
+      security:
+      - Bearer: []
+securityDefinitions:
+  Bearer:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions: {}
